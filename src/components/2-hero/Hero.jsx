@@ -1,6 +1,12 @@
 import React from "react";
 import "./hero.css";
+import Lottie from "lottie-react";
+import {useRef} from "react";
+
+import HeroAnimation from "../../../src/animation/Animation - 1728334837381.json";
+
 const Hero = () => {
+  const lottieRef = useRef();
   return (
     <section className="hero flex">
       <div className="left-section">
@@ -28,7 +34,17 @@ const Hero = () => {
           
         </div>
       </div>
-      <div className="right-section animation border">animation</div>
+      <div className="right-section animation">
+      <Lottie 
+      lottieRef={lottieRef}
+        onLoadedImages={()=>{
+          // @ts-ignore
+          //https://lottiereact.com/
+          lottieRef.current.setSpeed(0.5);
+
+        }}
+        animationData={HeroAnimation} />
+      </div>
     </section>
   );
 };

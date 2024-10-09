@@ -1,7 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./header.css";
 const Header = () => {
   const [showmodel, setshowmodel] = useState(false);
+  //si la valeur de currentMode==null prend :dark
+  const [theme, settheme] = useState(localStorage.getItem("currentMode") ?? "dark");
+
+
+  useEffect(() => {
+    if (theme === "light") {
+      document.body.classList.remove("dark");
+      document.body.classList.add("light");
+    } else {
+      document.body.classList.remove("light");
+      document.body.classList.add("dark");
+    }
+  }, [theme]);
+
   return (
     <header className=" flex">
       <button
@@ -28,8 +42,21 @@ const Header = () => {
           </li>
         </ul>
       </nav>
-      <button className="mode flex">
-        <span className="icon-moon-o"></span>
+      <button
+        onClick={() => {
+          //send value to local storage
+          localStorage.setItem(
+            "currentMode",
+            theme === "dark" ? "light" : "dark"
+          );
+          //get value from LS
+          settheme(localStorage.getItem("currentMode"));
+        }}
+        className="mode flex"
+      >
+        { theme === "dark"? (<span className="icon-moon-o"></span>):(<span className="icon-sun"></span>)
+
+        }
       </button>
       {showmodel && (
         <div className="fixed">
